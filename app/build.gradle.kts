@@ -1,8 +1,24 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
+    kotlin("plugin.serialization") version "2.0.21"
 }
+
+val localProperties = Properties().apply {
+    val propsFile = rootProject.file("local.properties")
+    if (propsFile.exists()) {
+        load(propsFile.inputStream())
+    } else {
+        error("Arquivo local.properties não encontrado na raiz do projeto!")
+    }
+}
+
+// Pega com segurança e falha já na configuração, não no cast
+val mapsKey: String = localProperties.getProperty("MAPS_API_KEY")
+    ?: error("MAPS_API_KEY não definida no local.properties")
 
 android {
     namespace = "com.example.nearby"
@@ -14,6 +30,10 @@ android {
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+        resValue("string", "google_maps_key", mapsKey)
+        buildConfigField("String", "MAPS_API_KEY", "\"$mapsKey\"")
+
+
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -39,6 +59,8 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -52,6 +74,10 @@ android {
 
 dependencies {
 
+    implementation(libs.maps.compose)
+    implementation(libs.kotlin.serialization)
+    implementation(libs.navigation.compose)
+    implementation(libs.coil.compose)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

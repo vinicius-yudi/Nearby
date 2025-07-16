@@ -20,7 +20,7 @@ import com.example.nearby.ui.theme.Gray500
 import com.example.nearby.ui.theme.Typography
 
 @Composable
-fun MarketDetailsInfos(modifier: Modifier = Modifier, market: Market) {
+fun NearbyMarketDetailsInfos(modifier: Modifier = Modifier, market: Market) {
     Column (modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ){
@@ -82,7 +82,7 @@ fun MarketDetailsInfos(modifier: Modifier = Modifier, market: Market) {
 @Preview
 @Composable
 private fun MarketDetailsInfosPreview() {
-    MarketDetailsInfos(
+    NearbyMarketDetailsInfos(
         modifier = Modifier.fillMaxWidth(),
         market = mockMarkets.first()
     )
