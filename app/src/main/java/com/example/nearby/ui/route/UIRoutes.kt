@@ -1,4 +1,4 @@
-package com.example.nearby.ui.screen.route
+package com.example.nearby.ui.route
 
 import kotlinx.serialization.Serializable
 
@@ -11,3 +11,7 @@ data object Welcome
 @Serializable
 
 data object  Home
+
+@Serializable
+
+data object QRCodeScanner
